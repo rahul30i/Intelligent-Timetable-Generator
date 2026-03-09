@@ -24,6 +24,7 @@ export default async function handler(req: any, res: any) {
     app.server.emit("request", req, res);
   } catch (error) {
     console.error("Backend function bootstrap failed", error);
+    const details = error instanceof Error ? error.message : String(error);
 
     if (!res.headersSent) {
       res.statusCode = 500;
@@ -31,7 +32,7 @@ export default async function handler(req: any, res: any) {
       res.end(
         JSON.stringify({
           error: "Backend startup failed",
-          hint: "Check backend env vars: JWT_SECRET, DATABASE_URL, CORS_ORIGIN.",
+          details,
         }),
       );
     }
