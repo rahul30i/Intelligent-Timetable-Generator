@@ -29,7 +29,7 @@ export async function configRoutes(app: FastifyInstance) {
         .default([]),
     });
 
-    const body = schema.parse(request.body);
+    const body: z.infer<typeof schema> = schema.parse(request.body);
 
     const existing = await prisma.globalConfig.findFirst();
     const config = await prisma.globalConfig.upsert({

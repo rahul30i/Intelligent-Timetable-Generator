@@ -24,7 +24,7 @@ export async function priorityRoutes(app: FastifyInstance) {
         }),
       ),
     });
-    const body = schema.parse(request.body);
+    const body: z.infer<typeof schema> = schema.parse(request.body);
 
     await prisma.subjectPriority.deleteMany({ where: { classId: body.classId } });
 
