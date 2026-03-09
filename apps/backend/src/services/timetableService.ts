@@ -1,5 +1,5 @@
 import { type PrismaClient } from "@prisma/client";
-import { generateWithGeneticAlgorithm } from "./gaEngine";
+import { generateWithGeneticAlgorithm } from "./gaEngine.js";
 
 export async function generateAndSaveTimetable(
   prisma: PrismaClient,

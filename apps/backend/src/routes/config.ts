@@ -1,7 +1,7 @@
 import { type FastifyInstance } from "fastify";
 import { z } from "zod";
-import { getPrisma } from "../plugins/prisma";
-import { timeSchema } from "../utils/validation";
+import { getPrisma } from "../plugins/prisma.js";
+import { timeSchema } from "../utils/validation.js";
 
 export async function configRoutes(app: FastifyInstance) {
   const prisma = getPrisma();

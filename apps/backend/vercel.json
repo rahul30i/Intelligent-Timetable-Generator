@@ -1,4 +1,9 @@
 {
   "outputDirectory": ".",
+  "functions": {
+    "api/serverless.ts": {
+      "includeFiles": "dist/**"
+    }
+  },
   "rewrites": [{ "source": "/(.*)", "destination": "/api/serverless" }]
 }

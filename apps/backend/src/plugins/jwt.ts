@@ -1,6 +1,6 @@
 import jwt from "@fastify/jwt";
 import { type FastifyInstance } from "fastify";
-import { type Env } from "../config/env";
+import { type Env } from "../config/env.js";
 
 export async function registerJwt(app: FastifyInstance, env: Env) {
   await app.register(jwt, {

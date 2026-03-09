@@ -1,7 +1,7 @@
 import { type FastifyInstance } from "fastify";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-import { getPrisma } from "../plugins/prisma";
+import { getPrisma } from "../plugins/prisma.js";
 
 export async function authRoutes(app: FastifyInstance) {
   const prisma = getPrisma();

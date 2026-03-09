@@ -1,5 +1,5 @@
 import { type PrismaClient } from "@prisma/client";
-import { addMinutes, formatTime, parseTime } from "../utils/time";
+import { addMinutes, formatTime, parseTime } from "../utils/time.js";
 
 export type GeneratedEntry = {
   dayOfWeek: number;

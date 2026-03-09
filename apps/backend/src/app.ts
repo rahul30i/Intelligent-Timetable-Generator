@@ -1,21 +1,21 @@
 ﻿import Fastify from "fastify";
 import sensible from "@fastify/sensible";
 import { ZodError } from "zod";
-import { loadEnv } from "./config/env";
-import { registerCors } from "./plugins/cors";
-import { registerHelmet } from "./plugins/helmet";
-import { registerRateLimit } from "./plugins/rateLimit";
-import { registerJwt } from "./plugins/jwt";
-import { authRoutes } from "./routes/auth";
-import { configRoutes } from "./routes/config";
-import { teacherRoutes } from "./routes/teachers";
-import { classRoutes } from "./routes/classes";
-import { subjectRoutes } from "./routes/subjects";
-import { assignmentRoutes } from "./routes/assignments";
-import { priorityRoutes } from "./routes/priorities";
-import { generationRoutes } from "./routes/generation";
-import { timetableRoutes } from "./routes/timetables";
-import { publicRoutes } from "./routes/public";
+import { loadEnv } from "./config/env.js";
+import { registerCors } from "./plugins/cors.js";
+import { registerHelmet } from "./plugins/helmet.js";
+import { registerRateLimit } from "./plugins/rateLimit.js";
+import { registerJwt } from "./plugins/jwt.js";
+import { authRoutes } from "./routes/auth.js";
+import { configRoutes } from "./routes/config.js";
+import { teacherRoutes } from "./routes/teachers.js";
+import { classRoutes } from "./routes/classes.js";
+import { subjectRoutes } from "./routes/subjects.js";
+import { assignmentRoutes } from "./routes/assignments.js";
+import { priorityRoutes } from "./routes/priorities.js";
+import { generationRoutes } from "./routes/generation.js";
+import { timetableRoutes } from "./routes/timetables.js";
+import { publicRoutes } from "./routes/public.js";
 
 export async function buildApp() {
   const env = loadEnv();
