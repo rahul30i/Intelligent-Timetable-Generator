@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TimetableStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Admin {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Teacher {
+  id           String   @id @default(uuid())
+  name         String
+  email        String?  @unique
+  availability Json?
+  assignments  SubjectAssignment[]
+  timetableEntries TimetableEntry[]
+}
+
+model Class {
+  id          String   @id @default(uuid())
+  name        String
+  semester    Int?
+  createdAt   DateTime @default(now())
+  assignments SubjectAssignment[]
+  priorities  SubjectPriority[]
+  timetables  Timetable[]
+  generationSetups GenerationSetup[]
+}
+
+model Subject {
+  id          String   @id @default(uuid())
+  name        String
+  code        String?  @unique
+  credits     Int      @default(1)
+  assignments SubjectAssignment[]
+  priorities  SubjectPriority[]
+  timetableEntries TimetableEntry[]
+}
+
+model SubjectAssignment {
+  id        String   @id @default(uuid())
+  classId   String
+  subjectId String
+  teacherId String
+  credits   Int?
+
+  class     Class    @relation(fields: [classId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+}
+
+model SubjectPriority {
+  id        String   @id @default(uuid())
+  classId   String
+  subjectId String
+  priority  Int
+
+  class     Class    @relation(fields: [classId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+}
+
+model GlobalConfig {
+  id                     String     @id
+  schoolStartTime        String
+  lectureDurationMinutes Int
+  lecturesPerDay         Int
+  breaks                 BreakTime[]
+}
+
+model BreakTime {
+  id        String   @id @default(uuid())
+  configId  String
+  startTime String
+  endTime   String
+  label     String?
+
+  config    GlobalConfig @relation(fields: [configId], references: [id])
+}
+
+model GenerationSetup {
+  id                 String   @id @default(uuid())
+  classId            String
+  semester           Int?
+  prioritiesVerified Boolean  @default(false)
+  createdAt          DateTime @default(now())
+
+  class              Class    @relation(fields: [classId], references: [id])
+}
+
+model Timetable {
+  id        String          @id @default(uuid())
+  classId   String
+  semester  Int?
+  status    TimetableStatus @default(DRAFT)
+  createdAt DateTime        @default(now())
+
+  class     Class           @relation(fields: [classId], references: [id])
+  entries   TimetableEntry[]
+}
+
+model TimetableEntry {
+  id          String   @id @default(uuid())
+  timetableId String
+  dayOfWeek   Int
+  periodIndex Int
+  subjectId   String
+  teacherId   String
+  startTime   String
+  endTime     String
+
+  timetable   Timetable @relation(fields: [timetableId], references: [id])
+  subject     Subject   @relation(fields: [subjectId], references: [id])
+  teacher     Teacher   @relation(fields: [teacherId], references: [id])
+}
